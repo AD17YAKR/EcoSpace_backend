@@ -22,7 +22,7 @@ dotenv.config({ path: './config/config.env' });
 const app = express();
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json
 app.use(bodyParser.json());
@@ -30,7 +30,9 @@ app.use(bodyParser.json());
 //Cookie Parser
 app.use(cookieParser());
 
-//TODO: Import your controllers here
+//TODO: Import your route locations here
+const auth = require('./routes/auth');
+const item = require('./routes/item');
 
 //Connection to Database
 connectDB();
@@ -68,16 +70,23 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //TODO: Create your Routers here
+app.use('/api/v1/auth', auth);
+app.use('/api/v1/item', item);
 
 app.use(errorHandler);
 
-const port = process.env.PORT || 7979;
+const port = process.env.PORT || 7117;
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the server');
+    res.send('Welcome to the EcoSwap server');
 });
 
-const server = app.listen(port, console.log(`Server running in ${process.env.NODE_ENV} mode on ${port}`));
+const server = app.listen(
+    port,
+    console.log(
+        `Server running in ${process.env.NODE_ENV} mode on ${port}`
+    )
+);
 
 //Handle Unhandled promise rejection
 process.on('unhandledRejection', (err, promise) => {
