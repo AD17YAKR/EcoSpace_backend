@@ -11,11 +11,11 @@ const ItemSchema = new mongoose.Schema({
     },
     itemAge: {
         type: String,
-        required: true,
+        required: true
     },
     description: {
         type: String,
-        required:true
+        required: true
     },
     isAvailable: {
         type: Boolean,
@@ -24,6 +24,11 @@ const ItemSchema = new mongoose.Schema({
     isDelete: {
         type: Boolean,
         default: false
+    },
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
     },
     createdAt: {
         type: Date,

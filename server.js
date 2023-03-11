@@ -33,6 +33,7 @@ app.use(cookieParser());
 //TODO: Import your route locations here
 const auth = require('./routes/auth');
 const item = require('./routes/item');
+const user = require('./routes/user');
 
 //Connection to Database
 connectDB();
@@ -72,6 +73,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //TODO: Create your Routers here
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/item', item);
+app.use('/api/v1/user', user);
 
 app.use(errorHandler);
 

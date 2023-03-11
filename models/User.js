@@ -43,6 +43,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    items: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Item',
+        required: true
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     createdAt: {

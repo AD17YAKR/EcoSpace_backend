@@ -1,36 +1,19 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middlewares/async');
 const Item = require('../models/Item');
-
-//@desc     Add new item
-//@routes   POST /api/v1/item
-//@access   Private
-exports.addItem = asyncHandler(async (req, res, next) => {
-    const { itemName, estimatedPrice, itemAge, description } =
-        req.body;
-    //Add user to req.body
-    const user = req.user.id;
-
-    // Add Item
-    const item = await Item.create({
-        itemName,
-        estimatedPrice,
-        itemAge,
-        description,
-        user
-    });
-
-    res.status(200).json({
-        success: true,
-        data: item
-    });
-});
+const User = require('../models/User');
 
 //@desc     Get all items
 //@routes   GET /api/v1/item
 //@access   Public
-exports.getItems = asyncHandler(async (req, res, next) => {
-    res.status(200).json(res.advanceResults);
+exports.getUserItemDetails = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+    const items = await Item.find({ user: id });
+
+    res.status(200).json({
+        success: true,
+        data: items
+    });
 });
 
 //@desc     Get items by id
